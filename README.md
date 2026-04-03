@@ -12,6 +12,8 @@ Xây dựng ứng dụng Android cho phép người dùng:
 
 Ứng dụng được phát triển theo hướng dễ mở rộng, phù hợp làm việc nhóm và chia module rõ ràng.
 
+**Link video:** https://drive.google.com/file/d/1WTJJH2S325HuAA8sKljnwjZtHcCEmvRD/view?usp=sharing
+
 ## 2. Công nghệ sử dụng
 
 - Ngôn ngữ: Java hoặc Kotlin
