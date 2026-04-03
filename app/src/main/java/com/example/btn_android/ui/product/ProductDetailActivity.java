@@ -1,5 +1,6 @@
 package com.example.btn_android.ui.product;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.TextView;
@@ -10,6 +11,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.btn_android.R;
 import com.example.btn_android.data.local.database.AppDatabase;
 import com.example.btn_android.data.local.entity.Product;
+import com.example.btn_android.data.repository.OrderRepository;
+import com.example.btn_android.ui.order.OrderActivity;
 import com.example.btn_android.utils.AuthHelper;
 
 import java.text.NumberFormat;
@@ -27,6 +30,7 @@ public class ProductDetailActivity extends AppCompatActivity {
 
     private Product currentProduct;
     private int productId;
+    private OrderRepository orderRepository;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +42,8 @@ public class ProductDetailActivity extends AppCompatActivity {
         tvDescription = findViewById(R.id.tvDetailDescription);
         tvCategoryId = findViewById(R.id.tvDetailCategory);
         btnAddToCart = findViewById(R.id.btnAddToCart);
+
+        orderRepository = new OrderRepository(this);
 
         productId = getIntent().getIntExtra(EXTRA_PRODUCT_ID, -1);
         if (productId == -1) {
@@ -58,26 +64,36 @@ public class ProductDetailActivity extends AppCompatActivity {
                 AuthHelper.redirectToLogin(this, ProductDetailActivity.class, productId);
             } else {
                 // User is logged in, proceed to add to cart
-                // This will be implemented by Việt Anh (Order & Payment module)
                 addToCart();
             }
         });
     }
 
     private void addToCart() {
-        // TODO: This will be implemented by Việt Anh
-        // For now, just show a success message
         int userId = AuthHelper.getCurrentUserId(this);
-        String username = AuthHelper.getCurrentUsername(this);
+        if (userId == -1) {
+            Toast.makeText(this, "Lỗi: Không thể xác định người dùng", Toast.LENGTH_SHORT).show();
+            return;
+        }
 
-        Toast.makeText(this,
-            "Sẽ thêm sản phẩm vào giỏ hàng của " + username + " (User ID: " + userId + ")",
-            Toast.LENGTH_LONG).show();
+        // Thêm sản phẩm vào giỏ với số lượng = 1
+        orderRepository.addProductToCart(userId, productId, 1, new OrderRepository.OrderCallback() {
+            @Override
+            public void onSuccess(Object result) {
+                int orderId = (int) result;
+                Toast.makeText(ProductDetailActivity.this, "Đã thêm sản phẩm vào giỏ hàng", Toast.LENGTH_SHORT).show();
+                
+                // Chuyển đến OrderActivity để hiển thị giỏ hàng
+                Intent intent = new Intent(ProductDetailActivity.this, OrderActivity.class);
+                intent.putExtra(OrderActivity.EXTRA_ORDER_ID, orderId);
+                startActivity(intent);
+            }
 
-        // TODO: Call OrderRepository to create/update order and add order detail
-        // Example:
-        // OrderRepository orderRepository = new OrderRepository(this);
-        // orderRepository.addProductToCart(userId, productId, quantity, callback);
+            @Override
+            public void onError(String error) {
+                Toast.makeText(ProductDetailActivity.this, "Lỗi: " + error, Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     @Override
