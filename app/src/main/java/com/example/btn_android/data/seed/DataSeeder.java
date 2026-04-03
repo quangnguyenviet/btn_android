@@ -2,13 +2,18 @@ package com.example.btn_android.data.seed;
 
 import com.example.btn_android.data.local.dao.CategoryDao;
 import com.example.btn_android.data.local.dao.ProductDao;
+import com.example.btn_android.data.local.dao.UserDao;
 import com.example.btn_android.data.local.entity.Category;
 import com.example.btn_android.data.local.entity.Product;
+import com.example.btn_android.data.local.entity.User;
 import java.util.ArrayList;
 import java.util.List;
 
 public class DataSeeder {
-    public static void seedData(CategoryDao categoryDao, ProductDao productDao) {
+    public static void seedData(CategoryDao categoryDao, ProductDao productDao, UserDao userDao) {
+        // Sample Users for testing
+        seedUsers(userDao);
+
         // Sample Categories
         List<Category> categories = new ArrayList<>();
         categories.add(new Category("Hoa quả nhiệt đới", "Các loại quả từ vùng khí hậu nóng"));
@@ -27,5 +32,18 @@ public class DataSeeder {
                 productDao.insert(new Product("Nho mẫu đơn", 450000, "Nho xanh cao cấp Nhật Bản", "grape_url", (int) categoryId));
             }
         }
+    }
+
+    private static void seedUsers(UserDao userDao) {
+        // Demo admin account
+        User admin = new User("admin", "password", "Quản trị viên", "admin@fruitapp.com", "0901234567");
+        userDao.insert(admin);
+
+        // Demo customer accounts
+        User customer1 = new User("customer1", "123456", "Nguyễn Văn A", "nguyenvana@gmail.com", "0909123456");
+        userDao.insert(customer1);
+
+        User customer2 = new User("customer2", "123456", "Trần Thị B", "tranthib@gmail.com", "0909234567");
+        userDao.insert(customer2);
     }
 }

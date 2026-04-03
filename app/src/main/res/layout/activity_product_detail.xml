@@ -18,7 +18,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
         android:textSize="20sp"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:textColor="#FF6B00" />
 
     <TextView
         android:id="@+id/tvDetailCategory"
@@ -29,9 +30,19 @@
     <TextView
         android:id="@+id/tvDetailDescription"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         android:layout_marginTop="16dp"
         android:lineSpacingExtra="4dp"
         android:textSize="16sp" />
+
+    <Button
+        android:id="@+id/btnAddToCart"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Thêm vào giỏ hàng"
+        android:textSize="16sp"
+        android:padding="16dp"
+        android:layout_marginTop="16dp" />
 
 </LinearLayout>

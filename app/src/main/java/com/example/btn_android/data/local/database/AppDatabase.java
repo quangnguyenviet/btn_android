@@ -53,7 +53,8 @@ public abstract class AppDatabase extends RoomDatabase {
             databaseWriteExecutor.execute(() -> {
                 CategoryDao categoryDao = INSTANCE.categoryDao();
                 ProductDao productDao = INSTANCE.productDao();
-                DataSeeder.seedData(categoryDao, productDao);
+                UserDao userDao = INSTANCE.userDao();
+                DataSeeder.seedData(categoryDao, productDao, userDao);
             });
         }
     };
