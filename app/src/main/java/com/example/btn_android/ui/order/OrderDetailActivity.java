@@ -83,15 +83,19 @@ public class OrderDetailActivity extends AppCompatActivity {
         orderRepository.getOrder(orderId, new OrderRepository.OrderCallback() {
             @Override
             public void onSuccess(Object result) {
-                order = (Order) result;
-                loadOrderDetails(orderId);
-                displayOrderInfo();
+                runOnUiThread(() -> {
+                    order = (Order) result;
+                    loadOrderDetails(orderId);
+                    displayOrderInfo();
+                });
             }
 
             @Override
             public void onError(String error) {
-                Toast.makeText(OrderDetailActivity.this, error, Toast.LENGTH_SHORT).show();
-                finish();
+                runOnUiThread(() -> {
+                    Toast.makeText(OrderDetailActivity.this, error, Toast.LENGTH_SHORT).show();
+                    finish();
+                });
             }
         });
     }
@@ -103,14 +107,18 @@ public class OrderDetailActivity extends AppCompatActivity {
         orderRepository.getOrderDetails(orderId, new OrderRepository.OrderCallback() {
             @Override
             public void onSuccess(Object result) {
-                orderDetails = (List<OrderDetail>) result;
-                displayInvoiceItems();
-                calculateTotals();
+                runOnUiThread(() -> {
+                    orderDetails = (List<OrderDetail>) result;
+                    displayInvoiceItems();
+                    calculateTotals();
+                });
             }
 
             @Override
             public void onError(String error) {
-                Toast.makeText(OrderDetailActivity.this, error, Toast.LENGTH_SHORT).show();
+                runOnUiThread(() -> {
+                    Toast.makeText(OrderDetailActivity.this, error, Toast.LENGTH_SHORT).show();
+                });
             }
         });
     }

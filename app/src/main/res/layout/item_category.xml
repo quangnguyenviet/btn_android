@@ -2,24 +2,39 @@
 <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/cardCategory"
-    android:layout_width="260dp"
+    style="@style/AppCardView"
+    android:layout_width="160dp"
     android:layout_height="wrap_content"
-    android:layout_marginEnd="10dp"
-    app:cardCornerRadius="12dp"
-    app:cardElevation="2dp"
-    app:strokeWidth="1dp">
+    android:layout_marginEnd="12dp"
+    app:cardCornerRadius="16dp"
+    app:cardElevation="3dp"
+    app:strokeColor="@color/primary"
+    app:strokeWidth="0dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:gravity="center"
         android:orientation="vertical"
-        android:padding="12dp">
+        android:padding="16dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="📁"
+            android:textSize="36sp" />
 
         <TextView
             android:id="@+id/tvCategoryName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="16sp"
+            android:layout_marginTop="8dp"
+            android:ellipsize="end"
+            android:gravity="center"
+            android:maxLines="1"
+            android:text="Danh mục"
+            android:textColor="@color/text_primary"
+            android:textSize="15sp"
             android:textStyle="bold" />
 
         <TextView
@@ -27,7 +42,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
-            android:maxLines="2" />
+            android:ellipsize="end"
+            android:gravity="center"
+            android:maxLines="2"
+            android:text="Mô tả"
+            android:textColor="@color/text_secondary"
+            android:textSize="12sp" />
 
     </LinearLayout>
 

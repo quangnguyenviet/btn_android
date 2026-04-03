@@ -62,6 +62,7 @@ public class OrderItemAdapter extends RecyclerView.Adapter<OrderItemAdapter.Orde
         private EditText etQuantity;
         private TextView tvSubtotal;
         private Button btnRemove;
+        private TextWatcher currentTextWatcher;  // Keep track of current watcher
 
         public OrderItemViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -73,21 +74,36 @@ public class OrderItemAdapter extends RecyclerView.Adapter<OrderItemAdapter.Orde
         }
 
         public void bind(OrderDetail detail, OnItemActionListener listener) {
-            AppDatabase database = AppDatabase.getDatabase(itemView.getContext());
-            Product product = database.productDao().getProductById(detail.getProductId());
-
-            if (product != null) {
-                tvProductName.setText(product.getName());
+            // Remove previous TextWatcher if exists
+            if (currentTextWatcher != null) {
+                etQuantity.removeTextChangedListener(currentTextWatcher);
             }
+
+            // Load product info on background thread
+            AppDatabase database = AppDatabase.getDatabase(itemView.getContext());
+            AppDatabase.databaseWriteExecutor.execute(() -> {
+                Product product = database.productDao().getProductById(detail.getProductId());
+
+                // Update UI on main thread
+                itemView.post(() -> {
+                    if (product != null) {
+                        tvProductName.setText(product.getName());
+                    }
+                });
+            });
 
             NumberFormat nf = NumberFormat.getCurrencyInstance(Locale.getDefault());
             tvUnitPrice.setText(nf.format(detail.getUnitPrice()));
+            
+            // Set quantity without triggering watcher
             etQuantity.setText(String.valueOf(detail.getQuantity()));
 
             updateSubtotal(detail);
 
-            // Cập nhật số lượng
-            etQuantity.addTextChangedListener(new TextWatcher() {
+            // Create new TextWatcher
+            currentTextWatcher = new TextWatcher() {
+                private boolean isUpdating = false;
+                
                 @Override
                 public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
 
@@ -96,18 +112,25 @@ public class OrderItemAdapter extends RecyclerView.Adapter<OrderItemAdapter.Orde
 
                 @Override
                 public void afterTextChanged(Editable s) {
+                    // Prevent recursive updates
+                    if (isUpdating) return;
+
+                    String text = s.toString().trim();
+                    if (text.isEmpty()) return;
+
                     try {
-                        int newQuantity = Integer.parseInt(s.toString());
+                        int newQuantity = Integer.parseInt(text);
                         if (newQuantity > 0 && newQuantity != detail.getQuantity()) {
+                            isUpdating = true;
                             listener.onQuantityChanged(detail.getOrderId(), detail.getProductId(), newQuantity);
-                            detail.setQuantity(newQuantity);
-                            updateSubtotal(detail);
                         }
                     } catch (NumberFormatException e) {
                         // Bỏ qua nếu không phải số
                     }
                 }
-            });
+            };
+            
+            etQuantity.addTextChangedListener(currentTextWatcher);
 
             // Xóa sản phẩm
             btnRemove.setOnClickListener(v -> {

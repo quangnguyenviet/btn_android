@@ -2,43 +2,46 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/background"
     android:fillViewport="true">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:gravity="center"
         android:orientation="vertical"
-        android:padding="24dp"
-        android:gravity="center">
+        android:padding="24dp">
 
-        <ImageView
-            android:layout_width="120dp"
-            android:layout_height="120dp"
-            android:layout_marginBottom="32dp"
-            android:src="@android:drawable/ic_menu_gallery"
-            android:contentDescription="App Logo" />
-
+        <!-- Logo/Icon -->
         <TextView
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Đăng nhập"
-            android:textSize="28sp"
-            android:textStyle="bold"
-            android:layout_marginBottom="8dp" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Vui lòng đăng nhập để tiếp tục mua hàng"
-            android:textSize="14sp"
-            android:textColor="#666666"
-            android:layout_marginBottom="32dp" />
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+            android:text="🍎"
+            android:textSize="80sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:text="Chào mừng trở lại!"
+            android:textColor="@color/text_primary"
+            android:textSize="28sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="32dp"
+            android:text="Vui lòng đăng nhập để tiếp tục mua hàng"
+            android:textColor="@color/text_secondary"
+            android:textSize="14sp" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/etUsername"
@@ -50,10 +53,10 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+            android:layout_marginBottom="8dp">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/etPassword"
@@ -68,37 +71,39 @@
             android:id="@+id/tvErrorMessage"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="#FF0000"
+            android:layout_marginBottom="8dp"
+            android:textColor="@color/error"
             android:textSize="12sp"
-            android:visibility="gone"
-            android:layout_marginBottom="8dp" />
+            android:visibility="gone" />
 
         <Button
             android:id="@+id/btnLogin"
+            style="@style/AppButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Đăng nhập"
-            android:textSize="16sp"
+            android:layout_marginTop="16dp"
             android:padding="16dp"
-            android:layout_marginTop="16dp" />
+            android:text="Đăng nhập"
+            android:textSize="16sp" />
 
         <Button
             android:id="@+id/btnRegister"
+            style="@style/AppButton.Outlined"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Đăng ký tài khoản"
-            android:textSize="16sp"
+            android:layout_marginTop="12dp"
             android:padding="16dp"
-            android:layout_marginTop="8dp"
-            style="@style/Widget.MaterialComponents.Button.OutlinedButton" />
+            android:text="Đăng ký tài khoản"
+            android:textSize="16sp" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Tài khoản demo: admin / password"
-            android:textSize="12sp"
-            android:textColor="#999999"
-            android:layout_marginTop="24dp" />
+            android:layout_marginTop="24dp"
+            android:text="💡 Tài khoản demo:\nadmin / admin123\ndemo / demo"
+            android:textAlignment="center"
+            android:textColor="@color/text_hint"
+            android:textSize="12sp" />
 
     </LinearLayout>
 </ScrollView>

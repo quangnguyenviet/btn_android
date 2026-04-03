@@ -60,12 +60,18 @@ public class InvoiceItemAdapter extends RecyclerView.Adapter<InvoiceItemAdapter.
         }
 
         public void bind(OrderDetail detail) {
+            // Load product info on background thread
             AppDatabase database = AppDatabase.getDatabase(itemView.getContext());
-            Product product = database.productDao().getProductById(detail.getProductId());
+            AppDatabase.databaseWriteExecutor.execute(() -> {
+                Product product = database.productDao().getProductById(detail.getProductId());
 
-            if (product != null) {
-                tvProductName.setText(product.getName());
-            }
+                // Update UI on main thread
+                itemView.post(() -> {
+                    if (product != null) {
+                        tvProductName.setText(product.getName());
+                    }
+                });
+            });
 
             tvQuantity.setText("x" + detail.getQuantity());
 
