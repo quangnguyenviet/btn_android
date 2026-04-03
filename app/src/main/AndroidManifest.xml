@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <application
+        android:name=".BtnAndroidApp"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -12,7 +13,13 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Btn_android">
         <activity
-            android:name=".view.MainActivity"
+            android:name=".ui.product.ProductDetailActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.category.CategoryActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.home.HomeActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

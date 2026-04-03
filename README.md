@@ -15,7 +15,7 @@ Xây dựng ứng dụng Android cho phép người dùng:
 ## 2. Công nghệ sử dụng
 
 - Ngôn ngữ: Java hoặc Kotlin
-- Cơ sở dữ liệu: Room Database hoặc SQLite
+- Cơ sở dữ liệu: Room Database
 - Lưu trạng thái: SharedPreferences
 
 ## 3. Phân chia công việc
