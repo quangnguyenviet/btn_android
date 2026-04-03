@@ -81,17 +81,23 @@ public class ProductDetailActivity extends AppCompatActivity {
             @Override
             public void onSuccess(Object result) {
                 int orderId = (int) result;
-                Toast.makeText(ProductDetailActivity.this, "Đã thêm sản phẩm vào giỏ hàng", Toast.LENGTH_SHORT).show();
                 
-                // Chuyển đến OrderActivity để hiển thị giỏ hàng
-                Intent intent = new Intent(ProductDetailActivity.this, OrderActivity.class);
-                intent.putExtra(OrderActivity.EXTRA_ORDER_ID, orderId);
-                startActivity(intent);
+                // Phải chạy UI operations trên main thread
+                runOnUiThread(() -> {
+                    Toast.makeText(ProductDetailActivity.this, "Đã thêm sản phẩm vào giỏ hàng", Toast.LENGTH_SHORT).show();
+                    
+                    // Chuyển đến OrderActivity để hiển thị giỏ hàng
+                    Intent intent = new Intent(ProductDetailActivity.this, OrderActivity.class);
+                    intent.putExtra(OrderActivity.EXTRA_ORDER_ID, orderId);
+                    startActivity(intent);
+                });
             }
 
             @Override
             public void onError(String error) {
-                Toast.makeText(ProductDetailActivity.this, "Lỗi: " + error, Toast.LENGTH_SHORT).show();
+                runOnUiThread(() -> {
+                    Toast.makeText(ProductDetailActivity.this, "Lỗi: " + error, Toast.LENGTH_SHORT).show();
+                });
             }
         });
     }
